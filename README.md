@@ -1,37 +1,103 @@
-# E-Commerce Project For Baby Tools
+# Babyshop 
 
-### TECHNOLOGIES
+## Table of Contents 
+1. [Description](#1-Description) 
+2. [Prerequisites](#2-Prerequisites) 
+3. [Quickstart](#3-Quickstart) 
+4. [Usage](#4-Usage) 
 
-- Python 3.9
-- Django 4.0.2
-- Venv
+## 1. Description
 
-### Hints
+This guide shows you how to get the Babyshop Django app up and running in Docker. You’ll learn how to:
 
-This section will cover some hot tips when trying to interacting with this repository:
+Clone the repository over SSH
 
-- Settings & Configuration for Django can be found in `babyshop_app/babyshop/settings.py`
-- Routing: Routing information, such as available routes can be found from any `urls.py` file in `babyshop_app` and corresponding subdirectories
+Build the Docker image with all dependencies
 
-### Photos
+Run the container, map port 8000, and auto-restart on failure
 
-##### Home Page with login
+Configure hosts and environment variables for production
 
-<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323080815407.jpg"></img>
-##### Home Page with filter
-<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323080840305.jpg"></img>
-##### Product Detail Page
-<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323080934541.jpg"></img>
+By the end, Babyshop will be accessible at http://<your-server-ip>:8025.
 
-##### Home Page with no login
-<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323080953570.jpg"></img>
+## 2. Prerequisites
 
-
-##### Register Page
-
-<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323081016022.jpg"></img>
+- **Docker Engine** installed on your server (see Docker’s [installation guide](https://docs.docker.com/engine/install/))
+- **Git** installed locally and an SSH key added to your GitHub account
+- **Sudo** or root access on the host to install packages and manage Docker
+- (Optional) **Docker Compose** if you plan to orchestrate multiple services
+- Basic familiarity with **Django** (settings, migrations) and **environment variables**
 
 
-##### Login Page
 
-<img alt="" src="https://github.com/MET-DEV/Django-E-Commerce/blob/master/project_images/capture_20220323081044867.jpg"></img>
+## 3. Quickstart
+
+
+### Clone the Repository   
+
+
+```bash
+git clone git@github.com:Developer-Akademie-GmbH/baby-tools-shop.git
+cd babyshop
+``` 
+
+
+### Build the Docker Image
+
+
+```bash
+docker build -t babyshop:latest .
+``` 
+
+
+### Run the Container
+
+
+```bash
+docker run -d \
+  --name babyshop-app \
+  -p 8025:8025 \
+  -v "$(pwd)/db.sqlite3":/app/db.sqlite3 \
+  --restart unless-stopped \
+  babyshop:latest
+``` 
+
+Maps port 8025 on your host to 8025 in the container
+
+Mounts your local db.sqlite3 so data persists
+
+## 4. Usage
+
+
+### View Logs
+
+```bash
+docker logs -f babyshop-app
+``` 
+
+Keeps you tailing Django’s output (migrations, errors, requests).
+
+
+
+### Run Django Management Commands
+
+```bash
+# Open a shell inside the running container
+docker exec -it babyshop-app sh
+
+# Once inside:
+python manage.py createsuperuser
+python manage.py collectstatic --noinput
+``` 
+
+
+
+### Stop and Restart
+
+```bash
+# Stop
+docker stop babyshop-app
+
+# Start again
+docker start babyshop-app
+``` 

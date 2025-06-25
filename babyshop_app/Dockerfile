@@ -21,11 +21,11 @@ COPY . /app
 RUN touch /app/db.sqlite3 && chmod 666 /app/db.sqlite3
 
 # Expose port
-EXPOSE 8000
+EXPOSE 8025
 
 # Entrypoint script: run migrations then start server
 # Create a small shell script
-RUN printf '#!/bin/sh\npython manage.py migrate --noinput\nexec python manage.py runserver 0.0.0.0:8000' > /app/entrypoint.sh \
+RUN printf '#!/bin/sh\npython manage.py migrate --noinput\nexec python manage.py runserver 0.0.0.0:8025' > /app/entrypoint.sh \
     && chmod +x /app/entrypoint.sh
 
 CMD ["/app/entrypoint.sh"]
