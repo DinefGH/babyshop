@@ -8,24 +8,13 @@
 
 ## 1. Description
 
-This guide shows you how to get the Babyshop Django app up and running in Docker. You’ll learn how to:
+In this guide, you’ll get the Babyshop Django app up and running in Docker by first cloning the repository over SSH, then building the Docker image with all dependencies, next running the container—mapping container port 8000 to host port 8025 and enabling automatic restart on failure—and finally configuring your hosts and environment variables for production; once complete, Babyshop will be accessible at http://<your-server-ip>:8025.
 
-Clone the repository over SSH
-
-Build the Docker image with all dependencies
-
-Run the container, map port 8000, and auto-restart on failure
-
-Configure hosts and environment variables for production
-
-By the end, Babyshop will be accessible at http://<your-server-ip>:8025.
 
 ## 2. Prerequisites
 
 - **Docker Engine** installed on your server (see Docker’s [installation guide](https://docs.docker.com/engine/install/))
 - **Git** installed locally and an SSH key added to your GitHub account
-- **Sudo** or root access on the host to install packages and manage Docker
-- (Optional) **Docker Compose** if you plan to orchestrate multiple services
 - Basic familiarity with **Django** (settings, migrations) and **environment variables**
 
 
@@ -33,7 +22,7 @@ By the end, Babyshop will be accessible at http://<your-server-ip>:8025.
 ## 3. Quickstart
 
 
-### Clone the Repository   
+1. Clone the Repository   
 
 
 ```bash
@@ -42,15 +31,15 @@ cd babyshop
 ``` 
 
 
-### Build the Docker Image
+2. Build the Docker Image
 
 
-```bash
-docker build -t babyshop:latest .
+```docker
+docker build -t babyshop .
 ``` 
 
 
-### Run the Container
+3. Run the Container
 
 
 ```bash
@@ -69,7 +58,7 @@ Mounts your local db.sqlite3 so data persists
 ## 4. Usage
 
 
-### View Logs
+1. View Logs
 
 ```bash
 docker logs -f babyshop-app
@@ -79,7 +68,7 @@ Keeps you tailing Django’s output (migrations, errors, requests).
 
 
 
-### Run Django Management Commands
+2. Run Django Management Commands
 
 ```bash
 # Open a shell inside the running container
@@ -91,7 +80,7 @@ python manage.py createsuperuser
 
 
 
-### Stop and Restart
+3. Stop and Restart
 
 ```bash
 # Stop
