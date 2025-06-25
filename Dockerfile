@@ -17,9 +17,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project code
 COPY . /app
 
-# Create SQLite file (if using SQLite); in production you'd use external DB
-RUN touch /app/db.sqlite3 && chmod 666 /app/db.sqlite3
-
 # Expose port
 EXPOSE 8025
 
